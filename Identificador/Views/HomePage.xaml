@@ -38,7 +38,8 @@
                 BorderWidth="1"
                 CornerRadius="12"
                 Padding="20,14"
-                HorizontalOptions="Fill" />
+                HorizontalOptions="Fill"
+                Clicked="OnCerrarSesion" />
     </VerticalStackLayout>
 
 </ContentPage>

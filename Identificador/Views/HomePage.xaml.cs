@@ -19,4 +19,9 @@ public partial class HomePage : ContentPage
     {
         InitializeComponent();
     }
+
+    private async void OnCerrarSesion(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//LoginPage");
+    }
 }
