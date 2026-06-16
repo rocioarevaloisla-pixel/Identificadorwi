@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Identificador.Views.Login"
+             Title="Login">
+    <VerticalStackLayout VerticalOptions="Center" Spacing="15" Padding="30">
+        <Label Text="Identificador" FontSize="28" FontAttributes="Bold"
+               HorizontalOptions="Center" />
+        <Label Text="Inicia sesión" FontSize="16"
+               HorizontalOptions="Center" Margin="0,0,0,20" />
+
+        <Label Text="Usuario" />
+        <Entry x:Name="UsuarioEntry" Placeholder="Ingresa tu usuario" />
+
+        <Label Text="Contraseña" />
+        <Grid ColumnDefinitions="*,Auto">
+            <Entry x:Name="PasswordEntry" Placeholder="Ingresa tu contraseña"
+                   IsPassword="True" />
+            <Button x:Name="TogglePasswordBtn" Text="👁"
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}"
+                    FontSize="20"
+                    WidthRequest="44" HeightRequest="44"
+                    Clicked="OnTogglePassword" />
+        </Grid>
+
+        <ActivityIndicator x:Name="LoadingIndicator"
+                           IsRunning="False" IsVisible="False"
+                           Color="{StaticResource Primary}"
+                           HeightRequest="40"
+                           VerticalOptions="Center" />
+
+        <Button x:Name="LoginBtn" Text="Ingresar"
+                Clicked="OnLoginClicked"
+                BackgroundColor="{StaticResource Primary}" TextColor="White"
+                Margin="0,10,0,0" />
+    </VerticalStackLayout>
+</ContentPage>
