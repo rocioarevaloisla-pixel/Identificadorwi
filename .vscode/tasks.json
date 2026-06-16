@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Iniciar emulador",
+      "type": "shell",
+      "command": "ANDROID_AVD_HOME=$HOME/.config/.android/avd QT_QPA_PLATFORM=xcb /opt/android-sdk/emulator/emulator -avd Pixel_6",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Ejecutar app (Android)",
+      "type": "shell",
+      "command": "dotnet run -f net10.0-android",
+      "dependsOn": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true
+      }
+    },
+    {
+      "label": "Iniciar todo",
+      "dependsOn": ["Iniciar emulador", "Ejecutar app (Android)"],
+      "dependsOrder": "parallel"
+    }
+  ]
+}

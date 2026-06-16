@@ -1,5 +1,13 @@
 {
   "profiles": {
+    "Android Emulator": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "",
+      "environmentVariables": {
+        "ANDROID_AVD_HOME": "$(HOME)/.config/.android/avd"
+      }
+    },
     "Windows Machine": {
       "commandName": "Project",
       "nativeDebugging": false
