@@ -94,6 +94,16 @@
                     CornerRadius="12"
                     Padding="20,14"
                     HorizontalOptions="Fill" />
+
+            <Label Text="Sobre nosotros"
+                   FontSize="14"
+                   TextColor="{StaticResource Secondary}"
+                   HorizontalOptions="Center"
+                   TextDecorations="Underline">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSobreNosotros" />
+                </Label.GestureRecognizers>
+            </Label>
         </VerticalStackLayout>
 
         <Border x:Name="SuccessOverlay"

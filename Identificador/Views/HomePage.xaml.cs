@@ -113,6 +113,11 @@ public partial class HomePage : ContentPage
         SuccessOverlay.IsVisible = false;
     }
 
+    private async void OnSobreNosotros(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("SobreNosotros");
+    }
+
     private async void OnCerrarSesion(object? sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//LoginPage");

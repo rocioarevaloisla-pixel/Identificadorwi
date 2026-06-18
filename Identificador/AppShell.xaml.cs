@@ -8,6 +8,7 @@ namespace Identificador
         {
             InitializeComponent();
             Routing.RegisterRoute("HomePage", typeof(HomePage));
+            Routing.RegisterRoute("SobreNosotros", typeof(SobreNosotros));
         }
     }
 }
