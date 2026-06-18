@@ -28,21 +28,43 @@ public partial class HomePage : ContentPage
         var action = await DisplayActionSheetAsync("Seleccionar foto", "Cancelar", null, "Tomar foto", "Elegir de galería");
         if (action is null or "Cancelar") return;
 
-        FileResult? foto = action switch
-        {
-            "Tomar foto" => await MediaPicker.CapturePhotoAsync(),
-            "Elegir de galería" => (await MediaPicker.PickPhotosAsync()).FirstOrDefault(),
-            _ => null
-        };
-
-        if (foto is null) return;
-
         IdentificarBtn.IsEnabled = false;
         LoadingIndicator.IsRunning = true;
         LoadingIndicator.IsVisible = true;
 
         try
         {
+            FileResult? foto = null;
+
+            if (action == "Tomar foto")
+            {
+                if (!MediaPicker.Default.IsCaptureSupported)
+                {
+                    await DisplayAlertAsync("Cámara no disponible", "Este dispositivo no soporta captura de fotos", "OK");
+                    return;
+                }
+
+                var status = await Permissions.RequestAsync<Permissions.Camera>();
+                if (status != PermissionStatus.Granted)
+                {
+                    await DisplayAlertAsync("Permiso denegado", "No se puede acceder a la cámara sin permiso", "OK");
+                    return;
+                }
+
+                foto = await MediaPicker.CapturePhotoAsync();
+            }
+            else if (action == "Elegir de galería")
+            {
+                var fotos = await MediaPicker.PickPhotosAsync();
+                foto = fotos?.FirstOrDefault();
+            }
+
+            if (foto is null)
+            {
+                await DisplayAlertAsync("Sin foto", "No se seleccionó ninguna foto. Intentá de nuevo.", "OK");
+                return;
+            }
+
             using var stream = await foto.OpenReadAsync();
             using var ms = new MemoryStream();
             await stream.CopyToAsync(ms);
@@ -75,7 +97,7 @@ public partial class HomePage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", $"No se pudo conectar con PlantNet: {ex.Message}", "OK");
+            await DisplayAlertAsync("Error", $"Ocurrió un error: {ex.Message}", "OK");
         }
         finally
         {
