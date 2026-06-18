@@ -11,6 +11,16 @@ public partial class Login : ContentPage
 		InitializeComponent();
 	}
 
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		UsuarioEntry.Text = string.Empty;
+		PasswordEntry.Text = string.Empty;
+		LoginBtn.IsEnabled = true;
+		LoadingIndicator.IsRunning = false;
+		LoadingIndicator.IsVisible = false;
+	}
+
 	private void OnTogglePassword(object? sender, EventArgs e)
 	{
 		PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
