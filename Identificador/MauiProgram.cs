@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Identificador.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Identificador
 {
@@ -14,6 +15,9 @@ namespace Identificador
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<PlantNetService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
