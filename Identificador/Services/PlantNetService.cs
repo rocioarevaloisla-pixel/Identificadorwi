@@ -16,7 +16,7 @@ public class PlantNetService
 
     public async Task<string> IdentifyPlantAsync(byte[] imageBytes, string filename)
     {
-        var url = $"{BaseUrl}?api-key={ApiKey}";
+        var url = $"{BaseUrl}?api-key={ApiKey}&lang=es";
         using var content = new MultipartFormDataContent();
         var imageContent = new ByteArrayContent(imageBytes);
         imageContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");

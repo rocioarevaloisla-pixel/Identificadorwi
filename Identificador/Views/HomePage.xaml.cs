@@ -89,11 +89,12 @@ public partial class HomePage : ContentPage
                 : "Sin nombre común";
             var score = results[0].GetProperty("score").GetDouble();
 
-            var mensaje = $"Nombre científico: {scientificName}\n" +
-                          $"Nombre común: {commonNames}\n" +
-                          $"Coincidencia: {score:P1}";
+            ResultadoNombreCientifico.Text = scientificName;
+            ResultadoNombreComun.Text = commonNames;
+            ResultadoScore.Text = $"Coincidencia: {score:P1}";
+            ResultadoFrame.IsVisible = true;
 
-            await DisplayAlertAsync("Planta identificada", mensaje, "OK");
+            SuccessOverlay.IsVisible = true;
         }
         catch (Exception ex)
         {
@@ -105,6 +106,11 @@ public partial class HomePage : ContentPage
             LoadingIndicator.IsRunning = false;
             LoadingIndicator.IsVisible = false;
         }
+    }
+
+    private void OnCerrarSuccess(object? sender, EventArgs e)
+    {
+        SuccessOverlay.IsVisible = false;
     }
 
     private async void OnCerrarSesion(object? sender, EventArgs e)
