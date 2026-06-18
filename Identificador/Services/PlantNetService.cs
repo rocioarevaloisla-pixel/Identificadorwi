@@ -6,7 +6,7 @@ namespace Identificador.Services;
 public class PlantNetService
 {
     private readonly HttpClient _http;
-    private const string ApiKey = "AQUI_TU_API_KEY";
+    private const string ApiKey = "2b10YFuQrd3ZT1Yaxalm7hGOe";
     private const string BaseUrl = "https://my-api.plantnet.org/v2/identify/all";
 
     public PlantNetService(HttpClient http)
