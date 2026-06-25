@@ -3,6 +3,10 @@ using System.Text.Json;
 
 namespace Identificador.Services;
 
+/// <summary>
+/// Servicio para la identificación de plantas a través de la API de PlantNet.
+/// Envía una imagen y devuelve los resultados de identificación en formato JSON.
+/// </summary>
 public class PlantNetService
 {
     private readonly HttpClient _http;
@@ -14,6 +18,13 @@ public class PlantNetService
         _http = http;
     }
 
+    /// <summary>
+    /// Identifica una planta a partir de una imagen usando la API de PlantNet.
+    /// </summary>
+    /// <param name="imageBytes">Arreglo de bytes de la imagen.</param>
+    /// <param name="filename">Nombre del archivo de la imagen.</param>
+    /// <param name="contentType">Tipo MIME de la imagen (por defecto image/jpeg).</param>
+    /// <returns>Respuesta JSON de PlantNet con los resultados de la identificación.</returns>
     public async Task<string> IdentifyPlantAsync(byte[] imageBytes, string filename, string contentType = "image/jpeg")
     {
         var url = $"{BaseUrl}?api-key={ApiKey}&lang=es";

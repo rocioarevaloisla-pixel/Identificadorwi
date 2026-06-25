@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "851960951117",
+    "project_id": "florascan-77bda",
+    "storage_bucket": "florascan-77bda.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851960951117:android:4de0eea858c393cf208704",
+        "android_client_info": {
+          "package_name": "com.companyname.identificador"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM54KIRL2SFGpV5fo6zreiAwzvH3imgNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -32,13 +32,31 @@
                        FontSize="28" FontAttributes="Bold"
                        TextColor="{StaticResource Primary}"
                        HorizontalOptions="Center" />
-                <Label Text="Inicia sesión"
+                <Label x:Name="TituloLabel" Text="Inicia sesión"
                        FontSize="16"
                        TextColor="{StaticResource Gray500}"
                        HorizontalOptions="Center"
                        Margin="0,0,0,10" />
 
-                <Label Text="Usuario"
+                <Label x:Name="NombreLabel" Text="Nombre"
+                       FontSize="13"
+                       TextColor="Black"
+                       IsVisible="False" />
+                <Border x:Name="NombreBorder"
+                        StrokeShape="RoundRectangle 10"
+                        Stroke="{StaticResource Gray200}"
+                        BackgroundColor="{StaticResource Surface}"
+                        Padding="14,0"
+                        IsVisible="False">
+                    <Entry x:Name="NombreEntry"
+                           Placeholder="Ingresa tu nombre"
+                           TextColor="Black"
+                           BackgroundColor="Transparent"
+                           FontSize="15"
+                           PlaceholderColor="{StaticResource Gray300}" />
+                </Border>
+
+                <Label Text="Correo electrónico"
                        FontSize="13"
                        TextColor="Black" />
                 <Border StrokeShape="RoundRectangle 10"
@@ -46,7 +64,8 @@
                         BackgroundColor="{StaticResource Surface}"
                         Padding="14,0">
                     <Entry x:Name="UsuarioEntry"
-                           Placeholder="Ingresa tu usuario"
+                           Placeholder="Ingresa tu correo"
+                           Keyboard="Email"
                            TextColor="Black"
                            BackgroundColor="Transparent"
                            FontSize="15"
@@ -92,6 +111,13 @@
                         CornerRadius="12"
                         HeightRequest="50"
                         Margin="0,6,0,0" />
+
+                <Button x:Name="ToggleModeBtn" Text="¿No tienes cuenta? Regístrate"
+                        Clicked="OnToggleMode"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="14"
+                        Padding="0" />
             </VerticalStackLayout>
         </Border>
     </Grid>
