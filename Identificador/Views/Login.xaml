@@ -120,5 +120,48 @@
                         Padding="0" />
             </VerticalStackLayout>
         </Border>
+
+        <Border x:Name="AlertOverlay"
+                IsVisible="False"
+                BackgroundColor="#80000000"
+                VerticalOptions="Fill" HorizontalOptions="Fill">
+            <Border BackgroundColor="White"
+                    StrokeShape="RoundRectangle 20"
+                    Stroke="Transparent"
+                    Padding="28"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="300">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="0,8" Radius="24" Opacity="0.2" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="14" HorizontalOptions="Center">
+                    <Label x:Name="AlertIcon" Text="🌱"
+                           FontSize="36"
+                           HorizontalOptions="Center" />
+                    <Label x:Name="AlertTitle"
+                           FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <BoxView HeightRequest="1"
+                             Color="{StaticResource PrimaryLight}"
+                             Margin="20,0"
+                             HorizontalOptions="Fill" />
+                    <Label x:Name="AlertMessage"
+                           FontSize="14"
+                           TextColor="{StaticResource Tertiary}"
+                           HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap" />
+                    <Button Text="OK"
+                            BackgroundColor="{StaticResource Primary}" TextColor="White"
+                            CornerRadius="12"
+                            Padding="16,10"
+                            FontSize="15" FontAttributes="Bold"
+                            HorizontalOptions="Fill"
+                            Clicked="OnCerrarAlert" />
+                </VerticalStackLayout>
+            </Border>
+        </Border>
     </Grid>
 </ContentPage>

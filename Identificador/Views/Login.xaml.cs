@@ -4,140 +4,165 @@ namespace Identificador.Views;
 
 public partial class Login : ContentPage
 {
-	private readonly FirebaseAuthService _authService;
-	private bool _esRegistro;
+    private readonly FirebaseAuthService _authService;
+    private bool _esRegistro;
 
-	public Login()
-	{
-		InitializeComponent();
-		_authService = new FirebaseAuthService(new HttpClient { Timeout = TimeSpan.FromSeconds(30) });
-	}
+    public Login()
+    {
+        InitializeComponent();
+        _authService = new FirebaseAuthService(new HttpClient { Timeout = TimeSpan.FromSeconds(30) });
+    }
 
-	protected override void OnAppearing()
-	{
-		base.OnAppearing();
-		UsuarioEntry.Text = string.Empty;
-		PasswordEntry.Text = string.Empty;
-		NombreEntry.Text = string.Empty;
-		LoginBtn.IsEnabled = true;
-		LoadingIndicator.IsRunning = false;
-		LoadingIndicator.IsVisible = false;
-		_esRegistro = false;
-		MostrarModoLogin();
-	}
+    // Cada vez que volvemos a esta pantalla, limpiamos los campos
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        UsuarioEntry.Text = string.Empty;
+        PasswordEntry.Text = string.Empty;
+        NombreEntry.Text = string.Empty;
+        LoginBtn.IsEnabled = true;
+        LoadingIndicator.IsRunning = false;
+        LoadingIndicator.IsVisible = false;
+        _esRegistro = false;
+        MostrarModoLogin();
+    }
 
-	private void OnTogglePassword(object? sender, EventArgs e)
-	{
-		PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
-		TogglePasswordBtn.Text = PasswordEntry.IsPassword ? "👁" : "👁‍🗨";
-	}
+    // Muestra el overlay de alerta en vez del dialogo gris del sistema
+    private void ShowAlert(string title, string message)
+    {
+        AlertTitle.Text = title;
+        AlertMessage.Text = message;
+        AlertOverlay.IsVisible = true;
+    }
 
-	private void OnToggleMode(object? sender, EventArgs e)
-	{
-		_esRegistro = !_esRegistro;
-		if (_esRegistro)
-			MostrarModoRegistro();
-		else
-			MostrarModoLogin();
-	}
+    private void OnCerrarAlert(object? sender, EventArgs e)
+    {
+        AlertOverlay.IsVisible = false;
+    }
 
-	private void MostrarModoLogin()
-	{
-		TituloLabel.Text = "Inicia sesión";
-		LoginBtn.Text = "Ingresar";
-		NombreLabel.IsVisible = false;
-		NombreBorder.IsVisible = false;
-		ToggleModeBtn.Text = "¿No tienes cuenta? Regístrate";
-	}
+    // Mostrar u ocultar la contraseña cuando tocan el ojito
+    private void OnTogglePassword(object? sender, EventArgs e)
+    {
+        PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+        TogglePasswordBtn.Text = PasswordEntry.IsPassword ? "👁" : "👁‍🗨";
+    }
 
-	private void MostrarModoRegistro()
-	{
-		TituloLabel.Text = "Crear cuenta";
-		LoginBtn.Text = "Registrarse";
-		NombreLabel.IsVisible = true;
-		NombreBorder.IsVisible = true;
-		ToggleModeBtn.Text = "¿Ya tienes cuenta? Inicia sesión";
-	}
+    // Cambiar entre modo inicio de sesion y modo registro
+    private void OnToggleMode(object? sender, EventArgs e)
+    {
+        _esRegistro = !_esRegistro;
+        if (_esRegistro)
+            MostrarModoRegistro();
+        else
+            MostrarModoLogin();
+    }
 
-	private async void OnLoginClicked(object? sender, EventArgs e)
-	{
-		string email = UsuarioEntry.Text?.Trim();
-		string password = PasswordEntry.Text;
+    private void MostrarModoLogin()
+    {
+        TituloLabel.Text = "Inicia sesión";
+        LoginBtn.Text = "Ingresar";
+        NombreLabel.IsVisible = false;
+        NombreBorder.IsVisible = false;
+        ToggleModeBtn.Text = "¿No tienes cuenta? Regístrate";
+    }
 
-		if (_esRegistro)
-		{
-			await RegistrarAsync(email, password);
-			return;
-		}
+    private void MostrarModoRegistro()
+    {
+        TituloLabel.Text = "Crear cuenta";
+        LoginBtn.Text = "Registrarse";
+        NombreLabel.IsVisible = true;
+        NombreBorder.IsVisible = true;
+        ToggleModeBtn.Text = "¿Ya tienes cuenta? Inicia sesión";
+    }
 
-		if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-		{
-			await DisplayAlertAsync("Error", "Completa todos los campos", "OK");
-			return;
-		}
+    // Procesa el inicio de sesion o registro cuando tocan el boton
+    private async void OnLoginClicked(object? sender, EventArgs e)
+    {
+        string email = UsuarioEntry.Text?.Trim();
+        string password = PasswordEntry.Text;
 
-		if (!email.Contains('@'))
-		{
-			await DisplayAlertAsync("Error", "El correo debe ser válido y contener un @", "OK");
-			return;
-		}
+        // Si esta en modo registro, va a la funcion de registrar
+        if (_esRegistro)
+        {
+            await RegistrarAsync(email, password);
+            return;
+        }
 
+        // Validamos que los campos no esten vacios
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            ShowAlert("Error", "Completa todos los campos");
+            return;
+        }
 
-		LoginBtn.IsEnabled = false;
-		LoadingIndicator.IsRunning = true;
-		LoadingIndicator.IsVisible = true;
+        // El correo debe tener el formato tipico para funcionar
+        if (!email.Contains('@'))
+        {
+            ShowAlert("Error", "El correo debe ser válido y contener un @");
+            return;
+        }
 
-		var result = await _authService.SignInWithEmailAsync(email, password);
+        // Desactivamos el boton mientras procesamos
+        LoginBtn.IsEnabled = false;
+        LoadingIndicator.IsRunning = true;
+        LoadingIndicator.IsVisible = true;
 
-		if (!result.IsSuccess)
-		{
-			await DisplayAlertAsync("Error", result.ErrorMessage, "OK");
-			LoginBtn.IsEnabled = true;
-			LoadingIndicator.IsRunning = false;
-			LoadingIndicator.IsVisible = false;
-			return;
-		}
+        // Intentamos iniciar sesion con Firebase
+        var result = await _authService.SignInWithEmailAsync(email, password);
 
-		await Shell.Current.GoToAsync($"HomePage?usuario={Uri.EscapeDataString(result.DisplayName)}");
-	}
+        if (!result.IsSuccess)
+        {
+            ShowAlert("Error", result.ErrorMessage);
+            LoginBtn.IsEnabled = true;
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+            return;
+        }
 
-	private async Task RegistrarAsync(string email, string password)
-	{
-		string nombre = NombreEntry.Text?.Trim();
+        // Todo bien, lo llevamos a la pantalla principal
+        await Shell.Current.GoToAsync($"HomePage?usuario={Uri.EscapeDataString(result.DisplayName)}");
+    }
 
-		if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(nombre))
-		{
-			await DisplayAlertAsync("Error", "Completa todos los campos", "OK");
-			return;
-		}
+    // Crea una cuenta nueva en Firebase
+    private async Task RegistrarAsync(string email, string password)
+    {
+        string nombre = NombreEntry.Text?.Trim();
 
-		if (!email.Contains('@'))
-		{
-			await DisplayAlertAsync("Error", "El correo debe ser válido y contener un @", "OK");
-			return;
-		}
+        // Validar que todos los campos esten llenos
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(nombre))
+        {
+            ShowAlert("Error", "Completa todos los campos");
+            return;
+        }
 
+        if (!email.Contains('@'))
+        {
+            ShowAlert("Error", "El correo debe ser válido y contener un @");
+            return;
+        }
 
-		LoginBtn.IsEnabled = false;
-		LoadingIndicator.IsRunning = true;
-		LoadingIndicator.IsVisible = true;
+        // Desactivamos el boton mientras procesamos
+        LoginBtn.IsEnabled = false;
+        LoadingIndicator.IsRunning = true;
+        LoadingIndicator.IsVisible = true;
 
-		var result = await _authService.SignUpWithEmailAsync(email, password, nombre);
+        var result = await _authService.SignUpWithEmailAsync(email, password, nombre);
 
-		if (!result.IsSuccess)
-		{
-			await DisplayAlertAsync("Error", result.ErrorMessage, "OK");
-			LoginBtn.IsEnabled = true;
-			LoadingIndicator.IsRunning = false;
-			LoadingIndicator.IsVisible = false;
-			return;
-		}
+        if (!result.IsSuccess)
+        {
+            ShowAlert("Error", result.ErrorMessage);
+            LoginBtn.IsEnabled = true;
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+            return;
+        }
 
-		await DisplayAlertAsync("Cuenta creada", $"Bienvenido {nombre}, ahora puedes iniciar sesión.", "OK");
-		_esRegistro = false;
-		MostrarModoLogin();
-		LoginBtn.IsEnabled = true;
-		LoadingIndicator.IsRunning = false;
-		LoadingIndicator.IsVisible = false;
-	}
+        // Cuenta creada exitosamente, volvemos al modo inicio de sesion
+        ShowAlert("Cuenta creada", $"Bienvenido {nombre}, ahora puedes iniciar sesión.");
+        _esRegistro = false;
+        MostrarModoLogin();
+        LoginBtn.IsEnabled = true;
+        LoadingIndicator.IsRunning = false;
+        LoadingIndicator.IsVisible = false;
+    }
 }
