@@ -38,7 +38,7 @@ public class PlantNetService
         if (!response.IsSuccessStatusCode)
         {
             var body = await response.Content.ReadAsStringAsync();
-            throw new HttpRequestException($"Error {response.StatusCode}: {body}");
+            throw new HttpRequestException($"Error {(int)response.StatusCode}: {body}", null, response.StatusCode);
         }
 
         return await response.Content.ReadAsStringAsync();

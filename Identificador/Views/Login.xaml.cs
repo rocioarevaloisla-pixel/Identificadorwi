@@ -76,6 +76,13 @@ public partial class Login : ContentPage
 			return;
 		}
 
+		if (!email.Contains('@'))
+		{
+			await DisplayAlertAsync("Error", "El correo debe ser válido y contener un @", "OK");
+			return;
+		}
+
+
 		LoginBtn.IsEnabled = false;
 		LoadingIndicator.IsRunning = true;
 		LoadingIndicator.IsVisible = true;
@@ -103,6 +110,13 @@ public partial class Login : ContentPage
 			await DisplayAlertAsync("Error", "Completa todos los campos", "OK");
 			return;
 		}
+
+		if (!email.Contains('@'))
+		{
+			await DisplayAlertAsync("Error", "El correo debe ser válido y contener un @", "OK");
+			return;
+		}
+
 
 		LoginBtn.IsEnabled = false;
 		LoadingIndicator.IsRunning = true;

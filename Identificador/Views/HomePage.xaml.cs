@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Text.Json;
 using Identificador.Services;
 
@@ -96,6 +97,10 @@ public partial class HomePage : ContentPage
             ResultadoFrame.IsVisible = true;
 
             SuccessOverlay.IsVisible = true;
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            await DisplayAlertAsync("Planta no identificada", "No se reconoció ninguna planta. Probá con otra foto.", "OK");
         }
         catch (Exception ex)
         {
