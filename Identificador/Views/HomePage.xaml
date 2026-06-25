@@ -5,7 +5,7 @@
              Title="Inicio"
              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*,Auto">
         <Grid>
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -13,7 +13,7 @@
                     <GradientStop Color="{StaticResource Primary}" Offset="1.0" />
                 </LinearGradientBrush>
             </Grid.Background>
-            <VerticalStackLayout Padding="20,44,20,16" Spacing="2">
+            <VerticalStackLayout Padding="20,40,20,40" Spacing="2">
                 <Label Text="🌱"
                        FontSize="24"
                        HorizontalOptions="Center" />
@@ -35,7 +35,9 @@
                        FontSize="16"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
-                       TextColor="{StaticResource Gray500}" />
+                       TextColor="{StaticResource Gray500}" 
+                        Margin="0,5,0,0"/>
+         
 
                 <Button x:Name="IdentificarBtn" Text="📷  Identificar Planta"
                         Clicked="OnIdentificarPlanta"
@@ -44,7 +46,8 @@
                         CornerRadius="16"
                         Padding="20,16"
                         HeightRequest="56"
-                        HorizontalOptions="Fill" />
+                        HorizontalOptions="Fill" 
+                        Margin="0,15,0,0"/>
 
                 <ActivityIndicator x:Name="LoadingIndicator"
                                    IsRunning="False" IsVisible="False"
@@ -98,22 +101,25 @@
                         Padding="20,14"
                         HeightRequest="48"
                         HorizontalOptions="Fill"
-                        Margin="0,8,0,0" />
+                        Margin="0,5,0,0" />
 
-                <Label Text="Sobre nosotros"
-                       FontSize="14"
-                       TextColor="{StaticResource Secondary}"
-                       HorizontalOptions="Center"
-                       TextDecorations="Underline">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSobreNosotros" />
-                    </Label.GestureRecognizers>
-                </Label>
             </VerticalStackLayout>
         </ScrollView>
 
+        <Label Grid.Row="2"
+               Text="Sobre nosotros"
+               FontSize="14"
+               TextColor="{StaticResource Secondary}"
+               HorizontalOptions="Center"
+               TextDecorations="Underline"
+               Margin="0,0,0,16">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSobreNosotros" />
+            </Label.GestureRecognizers>
+        </Label>
+
         <Border x:Name="SuccessOverlay"
-                Grid.RowSpan="2"
+                Grid.RowSpan="3"
                 IsVisible="False"
                 BackgroundColor="#80000000"
                 VerticalOptions="Fill" HorizontalOptions="Fill">
