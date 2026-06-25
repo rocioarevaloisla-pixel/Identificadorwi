@@ -296,10 +296,10 @@
     </Style>
 
     <Style TargetType="Shadow">
-        <Setter Property="Radius" Value="15" />
-        <Setter Property="Opacity" Value="0.5" />
-        <Setter Property="Brush" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-        <Setter Property="Offset" Value="10,10" />
+        <Setter Property="Radius" Value="12" />
+        <Setter Property="Opacity" Value="0.12" />
+        <Setter Property="Brush" Value="Black" />
+        <Setter Property="Offset" Value="0,4" />
     </Style>
 
     <Style TargetType="Slider">

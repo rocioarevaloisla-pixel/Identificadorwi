@@ -2,39 +2,97 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Identificador.Views.Login"
-             Title="Login">
-    <VerticalStackLayout VerticalOptions="Center" Spacing="15" Padding="30" Margin="0,0,0,200">
-        <Label Text="Identificador" FontSize="28" FontAttributes="Bold"
-               HorizontalOptions="Center" />
-        <Label Text="Inicia sesión" FontSize="16"
-               HorizontalOptions="Center" Margin="0,0,0,20" />
-
-        <Label Text="Usuario" />
-        <Entry x:Name="UsuarioEntry" Placeholder="Ingresa tu usuario" />
-
-        <Label Text="Contraseña" />
-        <Grid ColumnDefinitions="*,Auto">
-            <Entry x:Name="PasswordEntry" Placeholder="Ingresa tu contraseña"
-                   IsPassword="True" />
-            <Button x:Name="TogglePasswordBtn" Text="👁"
-                Grid.Column="1"
-                BackgroundColor="Transparent"
-                TextColor="{StaticResource Primary}"
-                FontSize="20"
-                WidthRequest="44" HeightRequest="44"
-                Padding="0"
-                Clicked="OnTogglePassword" />
+             Title="Login"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="{StaticResource PrimaryDark}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource Primary}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
         </Grid>
 
-        <ActivityIndicator x:Name="LoadingIndicator"
-                           IsRunning="False" IsVisible="False"
-                           Color="{StaticResource Primary}"
-                           HeightRequest="40"
-                           VerticalOptions="Center" />
+        <Border BackgroundColor="White"
+                StrokeShape="RoundRectangle 20"
+                Stroke="Transparent"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Padding="28"
+                Margin="24">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,6" Radius="16" Opacity="0.15" />
+            </Border.Shadow>
+            <VerticalStackLayout Spacing="14">
+                <Label Text="🌱"
+                       FontSize="44"
+                       HorizontalOptions="Center" />
+                <Label Text="FloraScan"
+                       FontSize="28" FontAttributes="Bold"
+                       TextColor="{StaticResource Primary}"
+                       HorizontalOptions="Center" />
+                <Label Text="Inicia sesión"
+                       FontSize="16"
+                       TextColor="{StaticResource Gray500}"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,10" />
 
-        <Button x:Name="LoginBtn" Text="Ingresar"
-                Clicked="OnLoginClicked"
-                BackgroundColor="{StaticResource Primary}" TextColor="White"
-                Margin="0,10,0,0" />
-    </VerticalStackLayout>
+                <Label Text="Usuario"
+                       FontSize="13"
+                       TextColor="Black" />
+                <Border StrokeShape="RoundRectangle 10"
+                        Stroke="{StaticResource Gray200}"
+                        BackgroundColor="{StaticResource Surface}"
+                        Padding="14,0">
+                    <Entry x:Name="UsuarioEntry"
+                           Placeholder="Ingresa tu usuario"
+                           TextColor="Black"
+                           BackgroundColor="Transparent"
+                           FontSize="15"
+                           PlaceholderColor="{StaticResource Gray300}" />
+                </Border>
+
+                <Label Text="Contraseña"
+                       FontSize="13"
+                       TextColor="Black" />
+                <Border StrokeShape="RoundRectangle 10"
+                        Stroke="{StaticResource Gray200}"
+                        BackgroundColor="{StaticResource Surface}"
+                        Padding="14,0">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Entry x:Name="PasswordEntry"
+                               Placeholder="Ingresa tu contraseña"
+                               IsPassword="True"
+                               TextColor="Black"
+                               BackgroundColor="Transparent"
+                               FontSize="15"
+                               PlaceholderColor="{StaticResource Gray300}" />
+                        <Button x:Name="TogglePasswordBtn" Text="👁"
+                            Grid.Column="1"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource Primary}"
+                            FontSize="20"
+                            WidthRequest="44" HeightRequest="44"
+                            Padding="0"
+                            Clicked="OnTogglePassword" />
+                    </Grid>
+                </Border>
+
+                <ActivityIndicator x:Name="LoadingIndicator"
+                                   IsRunning="False" IsVisible="False"
+                                   Color="{StaticResource Primary}"
+                                   HeightRequest="36"
+                                   VerticalOptions="Center" />
+
+                <Button x:Name="LoginBtn" Text="Ingresar"
+                        Clicked="OnLoginClicked"
+                        BackgroundColor="{StaticResource Primary}" TextColor="White"
+                        FontSize="16" FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="50"
+                        Margin="0,6,0,0" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>

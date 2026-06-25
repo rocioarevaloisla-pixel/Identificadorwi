@@ -6,105 +6,111 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
 
     <Grid RowDefinitions="Auto,*">
-        <BoxView HeightRequest="4"
-                 Color="{StaticResource Primary}"
-                 HorizontalOptions="Fill" />
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource PrimaryDark}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource Primary}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <VerticalStackLayout Padding="20,44,20,16" Spacing="2">
+                <Label Text="🌱"
+                       FontSize="24"
+                       HorizontalOptions="Center" />
+                <Label Text="FloraScan"
+                       FontSize="22" FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                <Label x:Name="BienvenidoLabel"
+                       Text="Bienvenido"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       TextColor="{StaticResource PrimaryLight}" />
+            </VerticalStackLayout>
+        </Grid>
 
-        <VerticalStackLayout Grid.Row="1"
-                             VerticalOptions="Center"
-                             Spacing="20" Padding="30">
-            <Label Text="🌱"
-                   FontSize="40"
-                   HorizontalOptions="Center" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="20" Padding="24,28,24,24">
+                <Label Text="Presiona el botón para comenzar a identificar plantas"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{StaticResource Gray500}" />
 
-            <Label Text="Identificador"
-                   FontSize="32" FontAttributes="Bold"
-                   TextColor="{StaticResource Primary}"
-                   HorizontalOptions="Center" />
+                <Button x:Name="IdentificarBtn" Text="📷  Identificar Planta"
+                        Clicked="OnIdentificarPlanta"
+                        BackgroundColor="{StaticResource Primary}" TextColor="White"
+                        FontSize="18" FontAttributes="Bold"
+                        CornerRadius="16"
+                        Padding="20,16"
+                        HeightRequest="56"
+                        HorizontalOptions="Fill" />
 
-            <Label x:Name="BienvenidoLabel"
-                   Text="Bienvenido"
-                   FontSize="22"
-                   HorizontalOptions="Center"
-                   TextColor="{StaticResource Tertiary}" />
+                <ActivityIndicator x:Name="LoadingIndicator"
+                                   IsRunning="False" IsVisible="False"
+                                   Color="{StaticResource Primary}"
+                                   HeightRequest="40"
+                                   VerticalOptions="Center" />
 
-            <BoxView HeightRequest="1"
-                     Color="{StaticResource Gray200}"
-                     Margin="40,0"
-                     HorizontalOptions="Fill" />
+                <Border x:Name="ResultadoFrame"
+                        IsVisible="False"
+                        BackgroundColor="White"
+                        StrokeShape="RoundRectangle 16"
+                        Stroke="{StaticResource PrimaryLight}"
+                        StrokeThickness="1"
+                        Padding="20"
+                        HorizontalOptions="Fill">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,4" Radius="12" Opacity="0.1" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                        <Label Text="🌿"
+                               FontSize="32"
+                               HorizontalOptions="Center" />
+                        <BoxView HeightRequest="2"
+                                 Color="{StaticResource PrimaryLight}"
+                                 Margin="30,4"
+                                 HorizontalOptions="Fill" />
+                        <Label x:Name="ResultadoNombreCientifico"
+                               FontSize="18" FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label x:Name="ResultadoNombreComun"
+                               FontSize="14"
+                               TextColor="{StaticResource Tertiary}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                        <Label x:Name="ResultadoScore"
+                               FontSize="13"
+                               HorizontalOptions="Center"
+                               TextColor="{StaticResource Gray500}" />
+                    </VerticalStackLayout>
+                </Border>
 
-            <Label Text="Presiona el botón para comenzar a identificar plantas"
-                   FontSize="16"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center" />
+                <Button Text="Cerrar sesión"
+                        Clicked="OnCerrarSesion"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}"
+                        BorderColor="{StaticResource Primary}"
+                        BorderWidth="1.5"
+                        CornerRadius="14"
+                        Padding="20,14"
+                        HeightRequest="48"
+                        HorizontalOptions="Fill"
+                        Margin="0,8,0,0" />
 
-            <Button x:Name="IdentificarBtn" Text="Identificar Planta"
-                    Clicked="OnIdentificarPlanta"
-                    BackgroundColor="{StaticResource Primary}" TextColor="White"
-                    FontSize="18"
-                    CornerRadius="12"
-                    Padding="20,14"
-                    HorizontalOptions="Fill"
-                    Margin="0,10,0,0" />
-            <ActivityIndicator x:Name="LoadingIndicator"
-                               IsRunning="False" IsVisible="False"
-                               Color="{StaticResource Primary}"
-                               HeightRequest="40"
-                               VerticalOptions="Center" />
-
-            <Border x:Name="ResultadoFrame"
-                    IsVisible="False"
-                    BackgroundColor="{StaticResource White}"
-                    Stroke="{StaticResource Primary}"
-                    StrokeShape="RoundRectangle 12"
-                    Padding="16"
-                    HorizontalOptions="Fill"
-                    Margin="0,10,0,0">
-                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                    <Label Text="🌿"
-                           FontSize="28"
-                           HorizontalOptions="Center" />
-                    <Label x:Name="ResultadoNombreCientifico"
-                           FontSize="18" FontAttributes="Bold"
-                           TextColor="{StaticResource Primary}"
-                           HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center" />
-                    <Label x:Name="ResultadoNombreComun"
-                           FontSize="15"
-                           TextColor="{StaticResource Tertiary}"
-                           HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center" />
-                    <BoxView HeightRequest="1"
-                             Color="{StaticResource Gray200}"
-                             Margin="20,4"
-                             HorizontalOptions="Fill" />
-                    <Label x:Name="ResultadoScore"
-                           FontSize="13"
-                           HorizontalOptions="Center"
-                           TextColor="{StaticResource Gray500}" />
-                </VerticalStackLayout>
-            </Border>
-
-            <Button Text="Cerrar sesión"
-                    Clicked="OnCerrarSesion"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource Primary}"
-                    BorderColor="{StaticResource Primary}"
-                    BorderWidth="1"
-                    CornerRadius="12"
-                    Padding="20,14"
-                    HorizontalOptions="Fill" />
-
-            <Label Text="Sobre nosotros"
-                   FontSize="14"
-                   TextColor="{StaticResource Secondary}"
-                   HorizontalOptions="Center"
-                   TextDecorations="Underline">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnSobreNosotros" />
-                </Label.GestureRecognizers>
-            </Label>
-        </VerticalStackLayout>
+                <Label Text="Sobre nosotros"
+                       FontSize="14"
+                       TextColor="{StaticResource Secondary}"
+                       HorizontalOptions="Center"
+                       TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSobreNosotros" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <Border x:Name="SuccessOverlay"
                 Grid.RowSpan="2"
@@ -112,29 +118,37 @@
                 BackgroundColor="#80000000"
                 VerticalOptions="Fill" HorizontalOptions="Fill">
             <Border BackgroundColor="White"
-                    Stroke="{StaticResource Primary}"
-                    StrokeShape="RoundRectangle 16"
-                    Padding="28"
+                    StrokeShape="RoundRectangle 20"
+                    Stroke="Transparent"
+                    Padding="32"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
-                    WidthRequest="280">
-                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                    WidthRequest="300">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="0,8" Radius="24" Opacity="0.2" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
                     <Label Text="🌿"
-                           FontSize="36"
+                           FontSize="48"
                            HorizontalOptions="Center" />
-                    <Label Text="Planta identificada"
-                           FontSize="18" FontAttributes="Bold"
+                    <Label Text="¡Planta identificada!"
+                           FontSize="20" FontAttributes="Bold"
                            TextColor="{StaticResource Primary}"
-                           HorizontalOptions="Center" />
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                    <BoxView HeightRequest="2"
+                             Color="{StaticResource PrimaryLight}"
+                             Margin="20,0"
+                             HorizontalOptions="Fill" />
                     <Button Text="OK"
                             BackgroundColor="{StaticResource Primary}" TextColor="White"
-                            CornerRadius="10" Padding="16,8"
-                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" Padding="20,12"
+                            FontSize="16" FontAttributes="Bold"
                             HorizontalOptions="Fill"
+                            HeightRequest="48"
                             Clicked="OnCerrarSuccess" />
                 </VerticalStackLayout>
             </Border>
         </Border>
     </Grid>
-
 </ContentPage>

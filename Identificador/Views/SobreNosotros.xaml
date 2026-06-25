@@ -9,24 +9,27 @@
         <Grid Grid.RowSpan="3">
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#193A31" Offset="0.0" />
-                    <GradientStop Color="#1D6C61" Offset="1.0" />
+                    <GradientStop Color="#1B5E20" Offset="0.0" />
+                    <GradientStop Color="#2E7D32" Offset="1.0" />
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
 
         <BoxView HeightRequest="5"
-                 Color="{StaticResource Secondary}"
+                 Color="{StaticResource PrimaryLight}"
                  HorizontalOptions="Fill" />
 
         <Border Grid.Row="1"
                 BackgroundColor="White"
-                Stroke="{StaticResource PrimaryDark}"
                 StrokeShape="RoundRectangle 20"
+                Stroke="Transparent"
                 Padding="28"
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 Margin="30,20">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,6" Radius="16" Opacity="0.15" />
+            </Border.Shadow>
             <VerticalStackLayout Spacing="14" HorizontalOptions="Center">
                 <Label Text="🌿"
                        FontSize="42"
@@ -36,7 +39,7 @@
                        TextColor="{StaticResource Primary}"
                        HorizontalOptions="Center" />
                 <BoxView HeightRequest="1"
-                         Color="{StaticResource PrimaryDark}"
+                         Color="{StaticResource PrimaryLight}"
                          Margin="20,4"
                          HorizontalOptions="Fill" />
                 <Label Text="Aplicación desarrollada en la asignatura de Programación .NET como proyecto final. 
@@ -50,6 +53,7 @@
                         CornerRadius="12"
                         FontSize="15" FontAttributes="Bold"
                         Padding="16,12"
+                        HeightRequest="48"
                         HorizontalOptions="Fill"
                         Clicked="OnVolver" />
             </VerticalStackLayout>
@@ -57,7 +61,7 @@
 
         <BoxView Grid.Row="2"
                  HeightRequest="6"
-                 Color="{StaticResource Secondary}"
+                 Color="{StaticResource PrimaryLight}"
                  HorizontalOptions="Fill" />
     </Grid>
 </ContentPage>

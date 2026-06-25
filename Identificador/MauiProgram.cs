@@ -16,7 +16,7 @@ namespace Identificador
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<HttpClient>(_ => new HttpClient { Timeout = TimeSpan.FromSeconds(60) });
             builder.Services.AddSingleton<PlantNetService>();
 
 #if DEBUG

@@ -69,9 +69,10 @@ public partial class HomePage : ContentPage
             using var ms = new MemoryStream();
             await stream.CopyToAsync(ms);
             var bytes = ms.ToArray();
+            var mimeType = foto.ContentType ?? "image/jpeg";
 
             var service = Handler!.MauiContext!.Services.GetRequiredService<PlantNetService>();
-            var resultadoJson = await service.IdentifyPlantAsync(bytes, foto.FileName);
+            var resultadoJson = await service.IdentifyPlantAsync(bytes, foto.FileName, mimeType);
 
             using var doc = JsonDocument.Parse(resultadoJson);
             var results = doc.RootElement.GetProperty("results");
